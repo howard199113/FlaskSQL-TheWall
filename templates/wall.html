@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wall</title>
+</head>
+<body>
+    <h1>The Wall</h1>
+    <h2>{{session['first_name']}}</h2>
+    <form action="/message", method="post">
+        <textarea name="message" cols="50" rows="4"></textarea>
+        <input type="submit" value="Post">
+    </form>
+    {% for message in all_messages %}
+    <div class="message">
+        <h4>{{message.first_name}} {{message.last_name}} {{message.created_at}}</h4>
+        <p>{{message.message}}</p>
+        {% for comment in all_comments %}
+            {% if comment.message_id == message.id %}
+                <h4>{{comment.first_name}} {{comment.last_name}} {{comment.created_at}}</h4>
+                <p>{{comment.comment}}</p>
+            {% endif %}
+        {% endfor %}    
+    <form action="/comment/{{message.id}}", method="post">
+        <textarea name="comment" cols="40" rows="3"></textarea>
+        <input type="submit" value="Add Comment">
+    </form>
+    {% endfor %}
+</body>
+</html>
